@@ -1,0 +1,41 @@
+" --- GENERAL SETTINGS ---
+syntax on                   " Enable syntax highlighting
+set number                  " Show line numbers
+set relativenumber          " Show relative numbers (great for jumping lines in i3)
+set mouse=a                 " Enable mouse support (just in case)
+set tabstop=4               " 1 tab = 4 spaces
+set shiftwidth=4            " Auto-indent width
+set expandtab               " Use spaces instead of tabs (standard for VHDL/C)
+set cursorline              " Highlight the current line
+set noswapfile              " Disable swap files (cleaner)
+
+" --- PLUGINS ---
+call plug#begin('~/.vim/plugged')
+
+Plug 'preservim/nerdtree'         " File explorer
+Plug 'vim-airline/vim-airline'    " Cool status bar at the bottom
+Plug 'morhetz/gruvbox'            " Professional retro-groove color theme
+Plug 'tpope/vim-commentary'       " Shortcut to comment code (gc)
+Plug 'suoto/vim-hdl'              " VHDL/Verilog support (Crucial for EEE!)
+Plug 'tpope/vim-fugitive'         " Git integration inside Vim
+
+call plug#end()
+
+" --- THEME & KEYBINDINGS ---
+colorscheme gruvbox
+set background=dark
+
+" Map Ctrl+n to toggle the file explorer
+map <C-n> :NERDTreeToggle<CR>
+
+" --- EEE SHORTCUTS ---
+" Compile and run C code with F5
+autocmd FileType c nnoremap <F5> :w <bar> !gcc % -o %< && ./%< <CR>
+
+" Check VHDL syntax with F6 (requires GHDL installed)
+autocmd FileType vhdl nnoremap <F6> :w <bar> !ghdl -a % <CR>
+" --- VCD + GHDL Simulation Mapping ---
+" F7: Save, Analyze, Elaborate, Run (VCD), and View
+autocmd FileType vhdl nnoremap <F7> :w <bar> !ghdl -a % && ghdl -e %:r && ghdl -r %:r --vcd=%:r.vcd && gtkwave %:r.vcd %:r.gtkw &<CR><CR>
+" F8: Run simulation in a bottom terminal split
+autocmd FileType vhdl nnoremap <F8> :w <bar> belowright 10term zsh -c "ghdl -a % && ghdl -e %:r && ghdl -r %:r; zsh" <CR>
