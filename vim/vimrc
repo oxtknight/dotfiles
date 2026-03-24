@@ -9,18 +9,20 @@ set expandtab               " Use spaces instead of tabs (standard for VHDL/C)
 set cursorline              " Highlight the current line
 set noswapfile              " Disable swap files (cleaner)
 
-" --- PLUGINS ---
+"--- PLUGINS ---
 call plug#begin('~/.vim/plugged')
-
+Plug 'ervandew/supertab' " makes Tab suggest completion 
+Plug 'mhinz/vim-startify'         "provides a start screen for Vim
 Plug 'preservim/nerdtree'         " File explorer
 Plug 'vim-airline/vim-airline'    " Cool status bar at the bottom
 Plug 'morhetz/gruvbox'            " Professional retro-groove color theme
 Plug 'tpope/vim-commentary'       " Shortcut to comment code (gc)
-Plug 'suoto/vim-hdl'              " VHDL/Verilog support (Crucial for EEE!)
+"Plug 'suoto/vim-hdl'              " VHDL/Verilog support (Crucial for EEE!)
 Plug 'tpope/vim-fugitive'         " Git integration inside Vim
-
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} "markdown preview
 call plug#end()
-
+let g:ale_linters = {'vhdl': ['hdl_checker']}
+let g:ale_vhdl_hdl_checker_executable = '/usr/local/bin/hdl_checker'
 " --- THEME & KEYBINDINGS ---
 colorscheme gruvbox
 set background=dark
@@ -30,7 +32,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 " --- EEE SHORTCUTS ---
 " Compile and run C code with F5
-autocmd FileType c nnoremap <F5> :w <bar> !gcc % -o %< && ./%< <CR>
+autocmd FileType c nnoremap <F5> :w <bar> !gcc % -o %< -lm && ./%< <CR>
 
 " Check VHDL syntax with F6 (requires GHDL installed)
 autocmd FileType vhdl nnoremap <F6> :w <bar> !ghdl -a % <CR>
@@ -39,3 +41,5 @@ autocmd FileType vhdl nnoremap <F6> :w <bar> !ghdl -a % <CR>
 autocmd FileType vhdl nnoremap <F7> :w <bar> !ghdl -a % && ghdl -e %:r && ghdl -r %:r --vcd=%:r.vcd && gtkwave %:r.vcd %:r.gtkw &<CR><CR>
 " F8: Run simulation in a bottom terminal split
 autocmd FileType vhdl nnoremap <F8> :w <bar> belowright 10term zsh -c "ghdl -a % && ghdl -e %:r && ghdl -r %:r; zsh" <CR>
+" Sync Vim yank/delete with the system clipboard
+set clipboard=unnamedplus
