@@ -19,6 +19,7 @@ Plug 'morhetz/gruvbox'            " Professional retro-groove color theme
 Plug 'tpope/vim-commentary'       " Shortcut to comment code (gc)
 "Plug 'suoto/vim-hdl'              " VHDL/Verilog support (Crucial for EEE!)
 Plug 'tpope/vim-fugitive'         " Git integration inside Vim
+Plug 'github/copilot.vim' "vim github copilot
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} "markdown preview
 call plug#end()
 let g:ale_linters = {'vhdl': ['hdl_checker']}
@@ -26,7 +27,14 @@ let g:ale_vhdl_hdl_checker_executable = '/usr/local/bin/hdl_checker'
 " --- THEME & KEYBINDINGS ---
 colorscheme gruvbox
 set background=dark
-
+let g:clang_library_path='/usr/lib/llvm-18/lib/libclang.so'
+" some copilot settings 
+let g:copilot_filetypes = {
+    \ 'markdown': v:false,
+    \ 'text': v:false,
+    \ }
+let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
 " Map Ctrl+n to toggle the file explorer
 map <C-n> :NERDTreeToggle<CR>
 
