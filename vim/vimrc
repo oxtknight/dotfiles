@@ -11,6 +11,7 @@ set noswapfile              " Disable swap files (cleaner)
 
 "--- PLUGINS ---
 call plug#begin('~/.vim/plugged')
+Plug 'stevearc/vim-arduino' " for arduino uploading and compiling and debugging sketches
 Plug 'ervandew/supertab' " makes Tab suggest completion 
 Plug 'mhinz/vim-startify'         "provides a start screen for Vim
 Plug 'preservim/nerdtree'         " File explorer
@@ -32,6 +33,7 @@ let g:clang_library_path='/usr/lib/llvm-18/lib/libclang.so'
 let g:copilot_filetypes = {
     \ 'markdown': v:false,
     \ 'text': v:false,
+    \ 'c': v:false,
     \ }
 let g:copilot_no_tab_map = v:true
 imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
