@@ -47,7 +47,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 exec --no-startup-id blueman-applet
 
 # Transparency with picom compositor
-exec_always picom -f
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 
 #Brightness adjustments using light
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 1 # increase screen brightness
