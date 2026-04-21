@@ -15,7 +15,8 @@ order += "ipv6"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "volume master"
-order += "battery all"
+#order += "battery all"
+order += "battery 0"
 order += "disk /"
 order += "load"
 order += "memory"
@@ -40,9 +41,23 @@ volume master {
     # mixer_idx = 0
 }
 
-battery all {
-        format = "%status %percentage %remaining"
+#battery all {
+#        format = "%status %percentage %remaining"
+#}
+battery 0 {
+	format = "%status %percentage"
+	format_down = "No Batt."
+	status_chr = "Charging --"
+	status_bat = "Discharging"
+	status_unk = "UNK"
+	status_full = "Charged! --"
+	low_threshold = 10
+	threshold_type = percentage
+	last_full_capacity = true
+	hide_seconds = true
+	path = "/sys/class/power_supply/BAT0/uevent"
 }
+
 
 disk "/" {
         format = "%avail"
