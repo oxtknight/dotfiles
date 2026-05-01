@@ -14,6 +14,12 @@ bindsym Print exec --no-startup-id flameshot gui
 # is used in the bar {} block below.
 font pango:monospace 8
 
+#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+# Disable X11 internal screensaver/blanking signals
+exec --no-startup-id xset s off
+exec --no-startup-id xset s 0 0
+exec --no-startup-id xset -dpms
+
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
@@ -25,11 +31,11 @@ exec --no-startup-id dex --autostart --environment i3
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 #Lock screen 
-exec --no-startup-id xss-lock --transfer-sleep-lock -- dm-tool lock
-bindsym $mod+Escape exec --no-startup-id dm-tool lock
+exec --no-startup-id xss-lock --transfer-sleep-lock -- /home/haru/.local/bin/smartlock
+bindsym $mod+Escape exec --no-startup-id /home/haru/.local/bin/smartlock
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -46,7 +52,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 exec --no-startup-id blueman-applet
 
 # Transparency with picom compositor
-exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
+exec_always --no-startup-id picom  --backend glx -b
 
 #Brightness adjustments using light
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 1 # increase screen brightness
@@ -134,7 +140,7 @@ for_window [class="^.*"] border pixel 2
 #gaps outer 2
 
 # battery notification
-exec --no-startup-id /home/j/.config/i3/i3-battery-popup -L 20 for_window [title="Battery Warning"] sticky enable
+exec --no-startup-id /home/haru/.config/i3/i3-battery-popup -L 20 for_window [title="Battery Warning"] sticky enable
 
 
 ## Screenshots
@@ -155,16 +161,27 @@ exec_always --no-startup-id xsetwacom set "Wacom Intuos PT S Pen eraser" MapToOu
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+#set $ws1 "1"
+#set $ws2 "2"
+#set $ws3 "3"
+#set $ws4 "4"
+#set $ws5 "5"
+#set $ws6 "6"
+#set $ws7 "7"
+#set $ws8 "8"
+#set $ws9 "9"
+#set $ws10 "10"
+
+set $ws1 "1一"
+set $ws2 "2二"
+set $ws3 "3三"
+set $ws4 "4四"
+set $ws5 "5五"
+set $ws6 "6六"
+set $ws7 "7七"
+set $ws8 "8八"
+set $ws9 "9九"
+set $ws10 "10十"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -228,7 +245,8 @@ exec_always --no-startup-id fcitx5 -d
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status 
+        status_command i3status -c ~/.config/i3status/config
         tray_output primary
+        
 
 }
