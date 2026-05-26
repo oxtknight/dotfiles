@@ -5,10 +5,17 @@
 # this file and re-run i3-config-wizard(1).
 # i3 config file (v4)
 #
+# --- Tablet Manual Overrides ---
+# Mod + F11: Force to Laptop Screen
+bindsym $mod+F11 exec --no-startup-id xinput map-to-output "OpenTabletDriver Virtual Tablet" eDP-1 && notify-send "Tablet: Laptop Screen"
+
+# Mod + F12: Force to HDMI Monitor
+bindsym $mod+F12 exec --no-startup-id xinput map-to-output "OpenTabletDriver Virtual Tablet" HDMI-1 && notify-send "Tablet: HDMI Monitor"
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 exec --no-startup-id copyq
 set $mod Mod4
-
+#exec --no-startup-id otd-daemon
+exec --no-startup-id /home/haru/.local/bin/start-otd
 # Enable Tap-to-Click
 exec_always --no-startup-id xinput set-prop "Elan Touchpad" "libinput Tapping Enabled" 1
 
@@ -45,7 +52,7 @@ bindsym $mod+Escape exec --no-startup-id /home/haru/.local/bin/smartlock
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-
+exec --no-startup-id otd-daemon
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
