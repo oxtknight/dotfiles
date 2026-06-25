@@ -2,9 +2,13 @@
 # It will not be overwritten, so edit it as you like.
 #
 # Should you change your keyboard layout some time, delete
+exec --no-startup-id python3 ~/path/to/adhan_rofi.py
 # this file and re-run i3-config-wizard(1).
 # i3 config file (v4)
-#
+exec_always --no-startup-id otd-daemon
+# Assign apps to Workspace 9
+assign [class="Anki"] → number 9
+assign [class="Xournalpp"] → number 9
 # --- Tablet Manual Overrides ---
 # Mod + F11: Force to Laptop Screen
 bindsym $mod+F11 exec --no-startup-id xinput map-to-output "OpenTabletDriver Virtual Tablet" eDP-1 && notify-send "Tablet: Laptop Screen"
